@@ -1,6 +1,6 @@
 package controllers
 
-import models.Book
+import  models.Book
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import play.api.libs.json._
 import repositories.BookRepository
@@ -37,7 +37,11 @@ class BooksController @Inject()(val controllerComponents: ControllerComponents, 
       val savedBook: Option[Book] = dataRepository.addBook(bookItem.get)
       Created(Json.toJson(savedBook))
     }
-
-
   }
+
+  def deleteBook(bookId: Long): Action[AnyContent] = Action {
+    dataRepository.deleteBook(bookId)
+    Ok(Json.toJson(s"Book with ID $bookId has been deleted"))
+  }
+
 }
